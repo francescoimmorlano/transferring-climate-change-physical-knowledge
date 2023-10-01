@@ -31,7 +31,7 @@ A conda env containing all the packages and versions required to run the workflo
 
 <code>conda env create --file transferring_env.yml</code>
 
-The conda env was created and tested on a MacBook M2 Pro with MacOS Ventura 13.4.1 to enable the user to run a demo version of the workflow and reproduce the results present in the paper.
+This makes the installation easy and fast. The conda env was created and tested on a MacBook M2 Pro with MacOS Ventura 13.4.1 to enable the user to run a demo version of the workflow and reproduce the results present in the paper.
 
 On the other hand, Tensorflow version 2.12.0 was used to run the entire workflow on <a href="https://confluence.columbia.edu/confluence/display/rcs/Ginsburg+-+Technical+Information">Ginsburg</a> (Columbia University) and <a href="https://www.cmcc.it/super-computing-center-scc">Juno</a> (CMCC Foundation) supercomputers.
 
