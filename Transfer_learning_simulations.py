@@ -79,11 +79,6 @@ X_ssp_list.append(X_ssp245)
 X_ssp_list.append(X_ssp370)
 X_ssp_list.append(X_ssp585)
 
-if scale_input:
-    return_list = compute_values_for_scaling(X_ssp_list)
-    X_min_list = return_list[0]
-    X_max_list = return_list[1]
-
 print(f'\n******************************************* Transfer_learning_{ts_human} *******************************************')
 
 for model_taken_out_idx, model_taken_out  in enumerate(models_list):
@@ -226,8 +221,6 @@ for model_taken_out_idx, model_taken_out  in enumerate(models_list):
                 val_y[idx_val_year] = test_y[val_year-start_year_test_loo_cv,:,:]
             
             if scale_input:
-                X_min = X_min_list[idx_short_scenario]
-                X_max = X_max_list[idx_short_scenario]
                 train_X = normalize_img(train_X, feature_range[0], feature_range[1], X_min, X_max).reshape(-1,1)
                 train_X_shuffle = normalize_img(train_X_shuffle, feature_range[0], feature_range[1], X_min, X_max).reshape(-1,1)
                 val_X = normalize_img(val_X, feature_range[0], feature_range[1], X_min, X_max).reshape(-1,1)

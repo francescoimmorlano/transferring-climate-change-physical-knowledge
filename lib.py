@@ -3,9 +3,8 @@ Author: Francesco Immorlano
 """
 
 import pandas as pd
-from scipy.interpolate import UnivariateSpline
 from joblib import Parallel, delayed
-# from pygam import s, LinearGAM
+from pygam import s, LinearGAM
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 from mpl_toolkits.axes_grid1 import make_axes_locatable
@@ -14,8 +13,6 @@ import pickle
 import os
 from tqdm import tqdm
 from variables import *
-
-import pylab as pl
 
 plt.rcParams.update({'font.sans-serif': 'Arial'})
 
@@ -793,32 +790,6 @@ def read_train_obs_predictions(n_datasets_per_model_scenario, start_year_trainin
 
     return predictions_train
 
-
-def compute_values_for_scaling(X_ssp_list):
-    """
-    Compute highest and lowest data values for each SSP scenario.
-
-    Parameters
-    ----------
-    X_ssp_list : list
-        List containing one list of CO2eq values for each SSP scenario
-
-    Returns
-    -------
-    return_list : list
-        List containing two lists: the first one contains the lowest
-        data values for each SSP scenario; the second one contains
-        the highest data values for each SSP scenario
-
-    """
-    return_list = []
-
-    X_min_list = [min(X_list) for X_list in X_ssp_list]
-    X_max_list = [max(X_list) for X_list in X_ssp_list]
-    return_list.extend([X_min_list, X_max_list])
-
-    return return_list
-
 def compute_years_to_threshold(window_size, predictions_means):
     """
     Compute the years in which 1.5°C and 2°C thresholds will be crossed.
@@ -875,31 +846,11 @@ def compute_years_to_threshold(window_size, predictions_means):
         year_to_2_threshold = np.nan
     return [year_to_1_5_threshold, year_to_2_threshold]
 
-"""
-    ORDINARY LEAST-SQUARES FIT (FOURTH-ORDER POLYNOMIAL)
-"""
 def moving_average(a, n=10):
     ret = np.cumsum(a, dtype=float)
     ret[n:] = ret[n:] - ret[:-n]
     return ret[n - 1:] / n
-
-def running_average(arr, window_size):
-    """
-    Compute the running avg along each row of a matrix using a window of size window_size
-
-    Parameters
-    ----------
-    arr : ndarray
-        2D array to compute running avg for each row
-    window_size : int
-        Size of the running avg window
-    Returns
-    -------
-        ndarray containing the running averages computed along each each row which now has n - window_size + 1 elements
-    """
-    return np.convolve(arr, np.ones(window_size) / window_size, mode='valid')
   
-# Define smoothing function for a single time series
 def smooth_timeseries(data, years, dof):
     """
     Smoothing function over a single time series
@@ -971,55 +922,6 @@ def smoothing_splines_pygam(temperature_array, take_out, dof):
             smoothed_maps[idx_short_scenario, :,:,:] = np.array(smoothed_flattened).T.reshape(len(years), *lat_lon_shape)
 
     return smoothed_maps
-
-def compute_running_avg_climatological_avg(arr, taken_out):
-
-    """
-    Compute running avgs with 3-years climatological avg
-
-    Parameters
-    ----------
-    arr : ndarray
-        Array to compute running avgs
-        Requested shape for both simulations and DNNs predictions: (models, scenarios, years)
-        Requested shape for taken-out simulation: (scenarios, years)
-    taken_out : bool
-        bool set to True if the array to compute anomalies is a taken-out simualation. Indeed, in this case there is one less dimension and this has to be taken into account in terms of axis to compute avgs
-    Returns
-    -------
-        ndarray containing the running avgs with 3-years climatological avg. Size: (models, scenarios, years) if taken_out=False or (scenarios, years) if taken_out=True
-    """
-
-    # Compute averages for padding with climatology averages for moving avg
-    if taken_out:
-        # Average of the first 3 years
-        average_start = np.mean(arr[:,:3], axis=1) # (3)
-        # Average of the last 3 year
-        average_end = np.mean(arr[:,-3:], axis=1) # (3)
-        # padded_arr = np.zeros((3, 249+window_size-1))
-        runn_avg_arr = np.zeros((3, 249))
-        
-        avg_start_repeated = np.tile(average_start[:, np.newaxis], (1, window_size // 2 - 1))
-        avg_end_repeated = np.tile(average_end[:, np.newaxis], (1, window_size // 2))
-        padded_arr = np.concatenate((avg_start_repeated, arr[:,:], avg_end_repeated), axis=1)
-    
-        for idx_short_scenario, short_scenario in enumerate(short_scenarios_list):
-            runn_avg_arr[idx_short_scenario,:] = np.array([running_average(row, window_size) for row in padded_arr[np.newaxis, idx_short_scenario,:]]) # (3, 249) # np.newaxis is necessary to reshape warming_simulation_takeout_means to (1,249), so that moving_average() function can be correctly applied
-
-    else:
-        average_start = np.mean(arr[:,:,:3], axis=2) # (21,3)
-        average_end = np.mean(arr[:,:,-3:], axis=2) # (21,3)
-        # padded_arr = np.zeros((21, 3, 249+window_size-1))
-        runn_avg_arr = np.zeros((arr.shape[0], 3, arr.shape[-1]))
-
-        avg_start_repeated = np.tile(average_start[:,:, np.newaxis], (1,window_size // 2 - 1))
-        avg_end_repeated = np.tile(average_end[:,:, np.newaxis], (1, window_size // 2))
-        padded_arr = np.concatenate((avg_start_repeated, arr[:,:,:], avg_end_repeated), axis=2)
-
-        for idx_short_scenario, short_scenario in enumerate(short_scenarios_list):
-            runn_avg_arr[:,idx_short_scenario,:] = np.array([running_average(row, window_size) for row in padded_arr[:,idx_short_scenario,:]]) # (21, 3, 249)
-    
-    return runn_avg_arr
 
 def main_uncertainty_partitioning(y, first_year, last_year):
 	n = 4	# this is the degree of the approximating polynomial P(x)

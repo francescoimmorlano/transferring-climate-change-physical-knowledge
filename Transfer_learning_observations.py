@@ -25,7 +25,6 @@ FIRST_TRAINING_DIRECTORY = ''
 
 optim = Adam(learning_rate=lr_tl_obs, beta_1=0.9, beta_2=0.999, epsilon=1e-8)
 
-
 class PerformancePlotCallback(Callback):
     def __init__(self, val_X, val_y, val_years, model_name, short_scenario, scenario, y_min, y_max, path_to_save):
         self.val_X = val_X
@@ -90,12 +89,6 @@ X_ssp_list.append(X_ssp245)
 X_ssp_list.append(X_ssp370)
 X_ssp_list.append(X_ssp585)
 
-if scale_input:
-    return_list = compute_values_for_scaling(X_ssp_list)
-    X_min_list = return_list[0]
-    X_max_list = return_list[1]
-
-
 for idx_model, model  in enumerate(models_list):
     for idx_short_scenario, scenario_short in enumerate(short_scenarios_list):
             for i in range(1,6):
@@ -156,8 +149,6 @@ for idx_model, model  in enumerate(models_list):
                     train_y_shuffle = train_y
 
                 if scale_input:
-                    X_min = X_min_list[idx_short_scenario]
-                    X_max = X_max_list[idx_short_scenario]
                     train_X = normalize_img(train_X, feature_range[0], feature_range[1], X_min, X_max).reshape(-1,1)
                     train_X_shuffle = normalize_img(train_X_shuffle, feature_range[0], feature_range[1], X_min, X_max).reshape(-1,1)
                     if compute_validation:
