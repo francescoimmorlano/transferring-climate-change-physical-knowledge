@@ -64,7 +64,7 @@ plt.text(x=0.08, y=0.92, s='A', fontweight='bold',
         fontsize=20, transform=fig.transFigure)
 plt.text(x=0.505, y=0.92, s='B', fontweight='bold',
         fontsize=20, transform=fig.transFigure)
-plt.savefig('Fig_S11.png', dpi=300, bbox_inches='tight')
+plt.savefig('Fig_S11.pdf', dpi=300, bbox_inches='tight')
 
 """ Fig. S12 """
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14,5))
@@ -97,7 +97,7 @@ plt.text(x=0.08, y=0.92, s='A', fontweight='bold',
         fontsize=20, transform=fig.transFigure)
 plt.text(x=0.505, y=0.92, s='B', fontweight='bold',
         fontsize=20, transform=fig.transFigure)
-plt.savefig('Fig_S12.png', dpi=300, bbox_inches='tight')
+plt.savefig('Fig_S12.pdf', dpi=300, bbox_inches='tight')
 
 """ Fig. S13 """
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14,5))
@@ -125,7 +125,7 @@ plt.text(x=0.08, y=0.92, s='A', fontweight='bold',
         fontsize=20, transform=fig.transFigure)
 plt.text(x=0.505, y=0.92, s='B', fontweight='bold',
         fontsize=20, transform=fig.transFigure)
-plt.savefig('Fig_S13.png', dpi=300, bbox_inches='tight')
+plt.savefig('Fig_S13.pdf', dpi=300, bbox_inches='tight')
 
 M_near_term = M[2030-1979:2039-1979+1]
 M_predictions_near_term = M_predictions[2030-1979:2039-1979+1]

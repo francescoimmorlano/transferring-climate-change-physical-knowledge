@@ -119,32 +119,39 @@ bias_avg_map_max = bias_avg_2081_2098_ssp245_map.max()
 """ Plot """
 colormap = 'seismic'
 
-size_suptitlefig = 45
-size_titlefig = 46
-size_annotatation_letters = 46
-size_title_scenario_axes = 35
-size_title_map_axes = 35
-size_temp_annotation = 31
-size_x_y_ticks = 32
-size_plot_legend = 27
-size_x_y_legend = 39
-size_colorbar_labels = 32
-size_colorbar_ticks = 29
+scale = min(7.5 / 42, 5.83 / 35)
 
-fig = plt.figure(figsize=(42,35))
+size_suptitlefig = 45 * scale
+size_titlefig = 46 * scale
+size_annotatation_letters = 40 * scale
+size_title_scenario_axes = 35 * scale
+size_title_map_axes = 35 * scale
+size_temp_annotation = 31 * scale
+size_x_y_ticks = 32 * scale
+size_plot_legend = 27 * scale
+size_x_y_legend = 39 * scale
+size_colorbar_labels = 32 * scale
+size_colorbar_ticks = 29 * scale
+
+linewidth = 0.3
+
+fig = plt.figure(figsize=(7, 5.83)) # 42/6, 35/6
 plt.rcParams.update({'font.sans-serif': 'Arial'})
 
+# gs0 = fig.add_gridspec(1, 2, wspace=0.1, width_ratios=[1.7, 1])
+# gs00 = gs0[0].subgridspec(3, 1, hspace=0.5)
+# gs01 = gs0[1].subgridspec(3, 1, hspace=0.3)
 gs0 = fig.add_gridspec(1, 2, wspace=0.1, width_ratios=[1.7, 1])
 gs00 = gs0[0].subgridspec(3, 1, hspace=0.5)
-gs01 = gs0[1].subgridspec(3, 1, hspace=0.3)
+gs01 = gs0[1].subgridspec(3, 1, hspace=0.5)
 
 """ ax1, ax2, ax3 """
 for scenario_idx, short_scenario in enumerate(short_scenarios_list):
     ax = fig.add_subplot(gs00[scenario_idx, 0])
-    p12, = ax.plot(np.arange(1850, 2099), smooth_warming_simulation_takeout_means[scenario_idx,:], linewidth=5, label=f'{model_take_out} (model taken out)', zorder=4, color='#D51500')
-    p13, = ax.plot(np.arange(1850, 2099), ensemble_warming_predictions_means[scenario_idx,:], linewidth=5, label=f'Ensemble', zorder=2, color='#0064D5')
-    p14, = ax.plot(np.arange(1850, 2099), q05_warming_simulations_remaining[scenario_idx,:], linewidth=4, zorder=3, color='grey', linestyle='dashed')
-    p15, = ax.plot(np.arange(1850, 2099), q95_warming_simulations_remaining[scenario_idx,:], linewidth=4, zorder=3, color='grey', linestyle='dashed')
+    p12, = ax.plot(np.arange(1850, 2099), smooth_warming_simulation_takeout_means[scenario_idx,:], linewidth=1, label=f'{model_take_out} (model taken out)', zorder=4, color='#D51500')
+    p13, = ax.plot(np.arange(1850, 2099), ensemble_warming_predictions_means[scenario_idx,:], linewidth=1, label=f'Ensemble', zorder=2, color='#0064D5')
+    p14, = ax.plot(np.arange(1850, 2099), q05_warming_simulations_remaining[scenario_idx,:], linewidth=0.5, zorder=3, color='grey', linestyle='dashed')
+    p15, = ax.plot(np.arange(1850, 2099), q95_warming_simulations_remaining[scenario_idx,:], linewidth=0.5, zorder=3, color='grey', linestyle='dashed')
     # Train set shading
     ax.fill_between(np.arange(start_year_training_loo_cv, end_year_training_loo_cv+1), -2, ensemble_warming_predictions_means[scenario_idx,:end_year_training_loo_cv-start_year_training_loo_cv+1], color='red', alpha=0.07)
     # Predictions 5-95% uncertainty shading
@@ -155,15 +162,22 @@ for scenario_idx, short_scenario in enumerate(short_scenarios_list):
     plt.yticks(fontsize=size_x_y_ticks)
 
     if scenario_idx == 1:
-        plt.ylabel('Surface Air Temperature relative to 1850–1900 (°C)', fontsize=size_x_y_legend, linespacing=1.5,labelpad=80)
+        plt.ylabel('Surface Air Temperature relative to 1850–1900 (°C)', fontsize=size_x_y_legend, linespacing=1.5) #,labelpad=80)
 
 
     ax.set_ylim([-1, np.ceil(np.max(np.maximum(q95_warming_simulations_remaining[scenario_idx,:], q95_warming_predictions[scenario_idx,:])))])
     ax.set_title(f'SSP{short_scenario[-3]}-{short_scenario[-2]}.{short_scenario[-1]}\nRMSE (2023–2098): {round(rmse_scenario[scenario_idx],2)}°C — Temperature in 2098: {np.round(ensemble_warming_predictions_means[scenario_idx,-1],2)} °C [{np.round(q05_warming_predictions[scenario_idx,-1],2)}–{np.round(q95_warming_predictions[scenario_idx,-1],2)} °C]', size=size_title_scenario_axes,
-                    pad=30, linespacing=1.5)
+                    linespacing=1.5) #pad = 30
     if scenario_idx == 0:
         l1 = ax.legend([p13, p12, p14], ['DNNs ensemble', model_take_out, '5-95% CMIP6'],
                     handler_map={tuple: HandlerTuple(ndivide=None)}, prop={'size':size_plot_legend}, loc='upper left')
+        
+    # Adjust axes frame thickness
+    for spine in ax.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+
+    ax.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
+
 
 """ ax4 """
 ax4 = fig.add_subplot(gs01[0, 0], projection=ccrs.Robinson())
@@ -171,16 +185,23 @@ data = avg_simulations_2081_2098_ssp245
 data_cyclic, lons_cyclic = add_cyclic_point(data, lons)
 cs=ax4.contourf(lons_cyclic, lats, data_cyclic,
                 levels=40, vmin=-90, vmax=90,
-                transform = ccrs.PlateCarree(),cmap=colormap)
-ax4.coastlines()
-gl4 = ax4.gridlines(draw_labels=False, linestyle='--')
+                transform = ccrs.PlateCarree(),cmap=colormap, linewidths=linewidth)
+ax4.coastlines(linewidth=linewidth)
+gl4 = ax4.gridlines(draw_labels=False, linestyle='--', linewidth=0.01)
 gl4.xlabel_style = {'size': size_x_y_ticks, 'color': 'k', 'rotation':0}
 gl4.ylabel_style = {'size': size_x_y_ticks, 'color': 'k', 'rotation':0}
 cbar4 = plt.colorbar(cs,shrink=0.8, orientation='horizontal', pad=0.05)
-cbar4.set_label('Surface Air Temperature [°C]',size=size_colorbar_labels,rotation='horizontal', labelpad=15)
+cbar4.set_label('Surface Air Temperature [°C]',size=size_colorbar_labels,rotation='horizontal') #, labelpad=15)
 for l in cbar4.ax.xaxis.get_ticklabels():
     l.set_size(size_colorbar_ticks)
-ax4.set_title(f'{model_take_out} average temperature (2081–2098)', size=size_title_map_axes, pad=17)
+cbar4.outline.set_linewidth(linewidth)  # Set the thickness of the colorbar box
+cbar4.ax.tick_params(width=linewidth, length=2)  # Reduce thickness and length of the ticks
+ax4.set_title(f'{model_take_out} average temperature (2081–2098)', size=size_title_map_axes) #, pad=17)
+
+
+# Adjust axes frame thickness
+for spine in ax4.spines.values():
+    spine.set_linewidth(linewidth)  # Thin the surrounding box
 
 """ ax5 """
 ax5 = fig.add_subplot(gs01[1, 0], projection=ccrs.Robinson())
@@ -188,16 +209,22 @@ data = avg_predictions_2081_2098_ssp245
 data_cyclic, lons_cyclic = add_cyclic_point(data, lons)
 cs = ax5.contourf(lons_cyclic, lats, data_cyclic,
                 levels=40, vmin=-90, vmax=90,
-                transform = ccrs.PlateCarree(),cmap=colormap)
-ax5.coastlines()
-gl5 = ax5.gridlines(draw_labels=False, linestyle='--')
+                transform = ccrs.PlateCarree(),cmap=colormap, linewidth=linewidth)
+ax5.coastlines(linewidth=linewidth)
+gl5 = ax5.gridlines(draw_labels=False, linestyle='--', linewidth=0.01)
 gl5.xlabel_style = {'size': size_x_y_ticks, 'color': 'k', 'rotation':0}
 gl5.ylabel_style = {'size': size_x_y_ticks, 'color': 'k', 'rotation':0}
 cbar5 = plt.colorbar(cs,shrink=0.8, orientation='horizontal', pad=0.05)
-cbar5.set_label('Surface Air Temperature [°C]',size=size_colorbar_labels, rotation='horizontal', labelpad=15)
+cbar5.set_label('Surface Air Temperature [°C]',size=size_colorbar_labels, rotation='horizontal') #, labelpad=15)
 for l in cbar5.ax.xaxis.get_ticklabels():
     l.set_size(size_colorbar_ticks)
-ax5.set_title(f'Ensemble DNNs average temperature (2081–2098)', size=size_title_map_axes, pad=17)
+cbar5.outline.set_linewidth(linewidth)  # Set the thickness of the colorbar box
+cbar5.ax.tick_params(width=linewidth, length=2)  # Reduce thickness and length of the ticks
+ax5.set_title(f'Ensemble DNNs average temperature (2081–2098)', size=size_title_map_axes) #, pad=17)
+
+# Adjust axes frame thickness
+for spine in ax5.spines.values():
+    spine.set_linewidth(linewidth)  # Thin the surrounding box
 
 """ ax6 """
 ax6 = fig.add_subplot(gs01[2, 0], projection=ccrs.Robinson())
@@ -205,22 +232,29 @@ data=bias_avg_2081_2098_ssp245_map
 data_cyclic, lons_cyclic = add_cyclic_point(data, lons)
 levels_3 = np.linspace(-bias_avg_map_max, bias_avg_map_max, 40)
 cs=ax6.contourf(lons_cyclic, lats, data_cyclic, levels=40, vmin=-bias_avg_map_max-6, vmax=bias_avg_map_max+6,
-            transform = ccrs.PlateCarree(),cmap=colormap)
-ax6.coastlines()
-gl6 = ax6.gridlines(draw_labels=False, linestyle='--')
+            transform = ccrs.PlateCarree(),cmap=colormap, linewidth=linewidth)
+ax6.coastlines(linewidth=linewidth)
+gl6 = ax6.gridlines(draw_labels=False, linestyle='--', linewidth=0.01)
 gl6.xlabel_style = {'size': size_x_y_ticks, 'color': 'k', 'rotation':0}
 gl6.ylabel_style = {'size': size_x_y_ticks, 'color': 'k', 'rotation':0}
 cbarticks_6 = [-7,-5,-3,-2,-1,0,1,2,3,4]
 cbar = plt.colorbar(cs,shrink=0.8, ticks=cbarticks_6, orientation='horizontal', pad=0.05)
-cbar.set_label('Surface Air Temperature difference [°C]',size=size_colorbar_labels, rotation='horizontal', labelpad=15)
+cbar.set_label('Surface Air Temperature difference [°C]',size=size_colorbar_labels, rotation='horizontal') #, labelpad=15)
 for l in cbar.ax.xaxis.get_ticklabels():
     l.set_size(size_colorbar_ticks)
-ax6.set_title(f'Difference (DNNs–CMIP6)', size=size_title_map_axes, pad=17)
+cbar.outline.set_linewidth(linewidth)  # Set the thickness of the colorbar box
+cbar.ax.tick_params(width=linewidth, length=2)  # Reduce thickness and length of the ticks
+
+ax6.set_title(f'Difference (DNNs–CMIP6)', size=size_title_map_axes) #, pad=17)
+
+# Adjust axes frame thickness
+for spine in ax6.spines.values():
+    spine.set_linewidth(linewidth)  # Thin the surrounding box
 
 plt.text(0.1, 0.92, "A", transform=fig.transFigure, fontsize=size_annotatation_letters, fontweight='bold')
 plt.text(0.62, 0.92, "B", transform=fig.transFigure, fontsize=size_annotatation_letters, fontweight='bold')
-plt.text(0.7, 0.915, "Scenario SSP2-4.5", transform=fig.transFigure, fontsize=size_annotatation_letters-3)
+plt.text(0.7, 0.915, "Scenario SSP2-4.5", transform=fig.transFigure, fontsize=size_annotatation_letters)
 plt.text(0.62, 0.63, "C", transform=fig.transFigure, fontsize=size_annotatation_letters, fontweight='bold')
 plt.text(0.62, 0.33, "D", transform=fig.transFigure, fontsize=size_annotatation_letters, fontweight='bold')
-plt.savefig(f'./Fig_1/Fig_1_{model_take_out}.png', dpi=300, bbox_inches='tight')
+plt.savefig(f'./Fig_1/Fig_1_{model_take_out}.pdf', dpi=300, bbox_inches='tight')
 plt.close()

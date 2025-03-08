@@ -134,5 +134,5 @@ plt.text(x=0.395, y=0.89, s='B', fontweight='bold',
 plt.text(x=0.66, y=0.89, s='C', fontweight='bold',
          fontsize=size_suptitlefig, ha="center", transform=fig.transFigure)
 
-plt.savefig(f'Fig_S10.png', bbox_inches = 'tight', dpi=300)
+plt.savefig(f'Fig_S10.pdf', bbox_inches = 'tight', dpi=300)
 plt.close()

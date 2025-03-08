@@ -221,6 +221,6 @@ plt.text(x=0.08, y=0.60, s='B', fontweight='bold',
 plt.text(x=0.08, y=0.305, s='C', fontweight='bold',
         fontsize=size_letters, transform=fig.transFigure)
 
-plt.savefig('Fig_S5.png', bbox_inches='tight', dpi=300)
+plt.savefig('Fig_S5.pdf', bbox_inches='tight', dpi=300)
 plt.close()
 

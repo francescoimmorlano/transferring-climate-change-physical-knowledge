@@ -111,7 +111,15 @@ for idx_short_scenario, scenario_short in enumerate(short_scenarios_list):
 
 
 """ Plot """
-fig, axes = plt.subplots(1, figsize=(10,10))
+reduction = 2.5
+a = 10/reduction
+b = 10/reduction
+
+scale = min(a / 10, b / 10)
+
+linewidth = 0.3
+
+fig, axes = plt.subplots(1, figsize=(a,b))
 xpos = [1,2,3]
 xlabel = ['SSP2-4.5','SSP3-7.0','SSP5-8.5']
 barwidth = 0.17
@@ -141,8 +149,8 @@ mid = avg_median_ensemble[0]
 lower = q05_ensemble[0]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='lightblue',edgecolor='black',linewidth=0.3,label='This work')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='lightblue',edgecolor='black',linewidth=0.2,label='This work')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Liang
 left = xpos[0]+l2
@@ -152,8 +160,8 @@ mid = yongxiao_median[0]
 lower = yongxiao_q05[0]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='pink',edgecolor='black',linewidth=0.3,label='Liang et al.')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='pink',edgecolor='black',linewidth=0.2,label='Liang et al.')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Ribes
 left = xpos[0]+l3
@@ -163,8 +171,8 @@ mid = ribes_mean[0]
 lower = ribes_q05[0]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='purple',edgecolor='black',linewidth=0.3,label='Ribes et al.')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='purple',edgecolor='black',linewidth=0.2,label='Ribes et al.')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Tokarska
 left = xpos[0]+l4
@@ -174,8 +182,8 @@ mid = tokarska_median[0]
 lower = tokarska_q05[0]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='blue',edgecolor='black',linewidth=0.3,label='Tokarska et al.')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='blue',edgecolor='black',linewidth=0.2,label='Tokarska et al.')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # IPCC WGI
 left = xpos[0]+l5
@@ -185,8 +193,8 @@ mid = ipcc_wg1_median[0]
 lower = ipcc_wg1_q05[0]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='orange',edgecolor='black',linewidth=0.3,label='IPCC WGI')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='orange',edgecolor='black',linewidth=0.2,label='IPCC WGI')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Unconstrained CMIP6
 left = xpos[0]+l6
@@ -196,8 +204,8 @@ mid = avg_median_simulations[0]
 lower = q05_simulations[0]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='red',edgecolor='black',linewidth=0.3,label='Unconstrained CMIP6')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='red',edgecolor='black',linewidth=0.2,label='Unconstrained CMIP6')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 """ SSP3-7.0 """
 # NN Ensemble
@@ -208,8 +216,8 @@ mid = avg_median_ensemble[1]
 lower = q05_ensemble[1]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='lightblue',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='lightblue',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Lian
 left = xpos[1]+l2
@@ -219,8 +227,8 @@ mid = yongxiao_median[1]
 lower = yongxiao_q05[1]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='pink',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='pink',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Ribes
 left = xpos[1]+l3
@@ -230,8 +238,8 @@ mid = ribes_mean[1]
 lower = ribes_q05[1]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='purple',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='purple',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Tokarska
 left = xpos[1]+l4
@@ -241,8 +249,8 @@ mid = tokarska_median[1]
 lower = tokarska_q05[1]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='blue',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='blue',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # IPCC WGI
 left = xpos[1]+l5
@@ -252,8 +260,8 @@ mid = ipcc_wg1_median[1]
 lower = ipcc_wg1_q05[1]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='orange',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='orange',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Unconstrained CMIP6
 left = xpos[1]+l6
@@ -263,8 +271,8 @@ mid = avg_median_simulations[1]
 lower = q05_simulations[1]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='red',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='red',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 """ SSP5-8.5 """
 # NN ensemble
@@ -275,8 +283,8 @@ mid = avg_median_ensemble[2]
 lower = q05_ensemble[2]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='lightblue',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='lightblue',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Lian
 left = xpos[2]+l2
@@ -286,8 +294,8 @@ mid = yongxiao_median[2]
 lower = yongxiao_q05[2]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='pink',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='pink',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Ribes
 left = xpos[2]+l3
@@ -297,8 +305,8 @@ mid = ribes_mean[2]
 lower = ribes_q05[2]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='purple',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='purple',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Tokarska
 left = xpos[2]+l4
@@ -308,8 +316,8 @@ mid = tokarska_median[2]
 lower = tokarska_q05[2]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='blue',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='blue',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # IPCC WGI
 left = xpos[2]+l5
@@ -319,8 +327,8 @@ mid = ipcc_wg1_median[2]
 lower = ipcc_wg1_q05[2]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='orange',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='orange',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 # Unconstrained CMIP6
 left = xpos[2]+l6
@@ -330,28 +338,36 @@ mid = avg_median_simulations[2]
 lower = q05_simulations[2]
 axes.fill([left,right,right,left],
                [lower,lower,upper,upper],
-               facecolor='red',edgecolor='black',linewidth=0.3,label='')
-axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=2)
+               facecolor='red',edgecolor='black',linewidth=0.2,label='')
+axes.plot([left+0.02,right-0.02],[mid,mid],color='white',linewidth=1)
 
 axes.set_xlim([0.5,3.56])
 axes.set_ylim([0,6])
 axes.set_xticks(xpos)
 axes.set_xticklabels(xlabel, rotation=30)
-plt.xticks(fontsize=15)
-plt.yticks(fontsize=15)
+plt.xticks(fontsize=15*scale)
+plt.yticks(fontsize=15*scale)
 
-axes.set_ylabel('Surface Air Temperature 2081-2100 relative to '+str(refperiod_start)+'-'+str(refperiod_end)+' ($^\circ$C)',fontsize=17, labelpad=15)
+for spine in axes.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+axes.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
 
-legend = axes.legend(loc='upper left', shadow=False, fontsize='small',ncol=1,frameon=True,facecolor='white', framealpha=1,prop={'size':13})    
+axes.set_ylabel('Surface Air Temperature 2081-2100 relative to '+str(refperiod_start)+'-'+str(refperiod_end)+' ($^\circ$C)',fontsize=17*scale) #, labelpad=15)
+
+legend = axes.legend(loc='upper left', shadow=False, fontsize='small',ncol=1,frameon=True,facecolor='white', framealpha=0.5,prop={'size':13*scale})    
 
 for yval in range(1,7):
-    axes.plot([0.5,5.5],[yval-refperiod_conversion,yval-refperiod_conversion], color='black', dashes=(2, 10),linewidth=0.7)
+    axes.plot([0.5,5.5],[yval-refperiod_conversion,yval-refperiod_conversion], color='black', dashes=(2, 10),linewidth=linewidth)
 ax2 = axes.twinx()
 mn, mx = axes.get_ylim()
 ax2.set_ylim(mn + refperiod_conversion, mx + refperiod_conversion) 
-ax2.set_ylabel('relative to '+str(piperiod_start)+'-'+str(piperiod_end)+' ($^\circ$C)', fontsize=17, labelpad=15)
+ax2.set_ylabel('relative to '+str(piperiod_start)+'-'+str(piperiod_end)+' ($^\circ$C)', fontsize=17*scale, labelpad=15*scale)
 
-plt.yticks(fontsize=15)
+for spine in ax2.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+ax2.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
+
+plt.yticks(fontsize=15*scale)
 
 axes.tick_params(
     axis='x',          # changes apply to the x-axis
@@ -367,7 +383,7 @@ axes.tick_params(
     right=False,         # ticks along the top edge are off
     labelleft=True) # labels along the bottom edge are off
 
-plt.savefig(f'Fig_3.png', bbox_extra_artists=(legend,), bbox_inches='tight', dpi=300)
+plt.savefig(f'Fig_3.pdf', bbox_extra_artists=(legend,), bbox_inches='tight', dpi=300)
 plt.close()
 
 

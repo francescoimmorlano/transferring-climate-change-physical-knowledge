@@ -110,5 +110,5 @@ plt.tick_params(labelcolor="none", bottom=False, left=False)
 plt.xlabel('Years', fontsize=19, labelpad=30)
 plt.ylabel('Surface Air Temperature relative to 1850–1900 (°C)', fontsize=19, labelpad=30)
 
-plt.savefig(f'./Fig_S7/Fig_S7_{model_taken_out}.png', dpi=100, bbox_inches='tight')
+plt.savefig(f'./Fig_S7/Fig_S7_{model_taken_out}.pdf', dpi=100, bbox_inches='tight')
 

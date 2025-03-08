@@ -116,17 +116,17 @@ for scenario_short_idx, scenario_short in enumerate(short_scenarios_list):
     axs[scenario_short_idx].fill_between(np.arange(start_year_val_tl_obs, end_year_val_tl_obs+1), -2, ensemble_predictions_tl_means[0, start_year_val_tl_obs-start_year_training_tl_obs : end_year_val_tl_obs-start_year_training_tl_obs+1], color='grey', alpha=0.12, zorder = 0)
     
     # DNNs predictions TL ensemble
-    axs[scenario_short_idx].plot(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), ensemble_predictions_tl_means[scenario_short_idx,:], linewidth=4, label=f'DNNs multi-model mean', color='#1d73b3', zorder=6)
+    axs[scenario_short_idx].plot(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), ensemble_predictions_tl_means[scenario_short_idx,:], linewidth=4, label=f'DNNs multi-model mean', color='#ff0000', zorder=6) # 1d73b3
     # DNNs predictions after pre-train ensemble
     axs[scenario_short_idx].plot(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), ensemble_predictions_train_means[scenario_short_idx,:], linewidth=4, label=f'DNNs multi-model mean (trained on observations only)', color='#1c7506', zorder=6)
-    # predictions 5-95% range uncertainty shading
-    axs[scenario_short_idx].fill_between(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), q05_predictions_tl[scenario_short_idx,:], q95_predictions_tl[scenario_short_idx,:], facecolor='#7EFDFF', zorder=3)
+    # DNNs predictions TL 5-95% range uncertainty shading
+    axs[scenario_short_idx].fill_between(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), q05_predictions_tl[scenario_short_idx,:], q95_predictions_tl[scenario_short_idx,:], facecolor='#ff0000', zorder=3, alpha=0.3) # 7EFDFF
     # DNNs predictions after pre-train 5-95% range uncertainty shading
     axs[scenario_short_idx].fill_between(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), q05_predictions_train[scenario_short_idx,:], q95_predictions_train[scenario_short_idx,:], facecolor='#abff7e', zorder=3)
     # CMIP6 ensemble
-    axs[scenario_short_idx].plot(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), smooth_ensemble_warming_simulations_means[scenario_short_idx,:], linewidth=4, label=f'CMIP6 multi-model mean', color='#F56113', zorder=5)
+    axs[scenario_short_idx].plot(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), smooth_ensemble_warming_simulations_means[scenario_short_idx,:], linewidth=4, label=f'CMIP6 multi-model mean', color='#634444', zorder=5) # F56113
     # CMIP6 5-95% range uncertainty shading
-    axs[scenario_short_idx].fill_between(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), q05_simulations[scenario_short_idx,:], q95_simulations[scenario_short_idx,:], facecolor='#FFD67E', zorder=1)
+    axs[scenario_short_idx].fill_between(np.arange(start_year_training_tl_obs, end_year_test_tl_obs+1), q05_simulations[scenario_short_idx,:], q95_simulations[scenario_short_idx,:], facecolor='#9c5050', zorder=1, alpha=0.2) # FFD67E
     axs[scenario_short_idx].set_xticks([1979, 2000, 2022, 2040, 2060, 2080, 2098])
 
 
@@ -150,5 +150,5 @@ plt.tick_params(labelcolor="none", bottom=False, left=False)
 plt.xlabel('Years', fontsize=20, labelpad=30)
 plt.ylabel('Surface Air Temperature relative to 1850–1900 (°C)', fontsize=22, labelpad=30)
 
-plt.savefig(f'Fig_S8.png', dpi=300, bbox_inches='tight')
+plt.savefig(f'Fig_S8.pdf', dpi=300, bbox_inches='tight')
 plt.close()

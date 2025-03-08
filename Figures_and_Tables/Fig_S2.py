@@ -57,6 +57,6 @@ plt.text(x=0.515, y=0.62, s=f'E', fontweight='bold',
          fontsize=45, ha="center", transform=fig.transFigure)
 plt.text(x=0.515, y=0.34, s=f'F', fontweight='bold',
          fontsize=45, ha="center", transform=fig.transFigure)
-plt.savefig(f'Fig_S2.png', dpi=300, bbox_inches='tight')
+plt.savefig(f'Fig_S2.pdf', dpi=300, bbox_inches='tight')
 plt.close()
 

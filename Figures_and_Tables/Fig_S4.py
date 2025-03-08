@@ -130,5 +130,5 @@ cbar5.set_label(label='Surface Air Temperature difference [°C]', size=size_colo
 for l in cbar5.ax.xaxis.get_ticklabels():
     l.set_size(size_colorbar_ticks)
 
-plt.savefig(f'Fig_S4/Fig_S4_{model_taken_out}.png', bbox_inches='tight', dpi=300)
+plt.savefig(f'Fig_S4/Fig_S4_{model_taken_out}.pdf', bbox_inches='tight', dpi=300)
 plt.close()

@@ -41,14 +41,22 @@ for year in val_years_list_tl_obs:
 """ Plot """
 colormap = 'seismic'
 
-size_title_axes = 35
-size_lat_lon_coords = 30
-size_colorbar_labels = 31
-size_colorbar_ticks = 30
+reduction = 8
+a = 45/reduction
+b = 25/reduction
 
-fig = plt.figure(figsize=(45,25))
+scale = min(a / 45, b / 25)
 
-gs = fig.add_gridspec(2, 1, height_ratios=[1,1], hspace=-0.05)
+linewidth = 0.15
+
+size_title_axes = 45 * scale
+size_lat_lon_coords = 40 * scale
+size_colorbar_labels = 40 * scale
+size_colorbar_ticks = 40 * scale
+
+fig = plt.figure(figsize=(a, b))
+
+gs = fig.add_gridspec(2, 1, height_ratios=[1,1], hspace=0.1)
 gs1 = gs[0].subgridspec(1, 2, wspace=-0.05)
 gs2 = gs[1].subgridspec(1, 4, wspace=0.08)
 
@@ -83,10 +91,10 @@ ax100 = fig.add_subplot(gs1[0,0], projection=ccrs.Robinson())
 difference_warming_cyclic_data,lons_cyclic=add_cyclic_point(diff_ensemble_array_avg,coord=lons)
 cs100=ax100.contourf(lons_cyclic,lats,difference_warming_cyclic_data, levels=levels_bias,
                         transform = ccrs.PlateCarree(),
-                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias)
-ax100.set_title(f'Bias (DNNs ensemble–Obs)', loc='center', size=size_title_axes, pad=17)
-ax100.coastlines()
-gl_bias = ax100.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.1, color='black', x_inline=False, y_inline=False, dms=True)
+                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias, linewidth=linewidth)
+ax100.set_title(f'Bias (DNNs ensemble–Obs)', loc='center', size=size_title_axes, pad=2)
+ax100.coastlines(linewidth=linewidth)
+gl_bias = ax100.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', color='black', x_inline=False, y_inline=False, dms=True, linewidth=0.01)
 gl_bias.xlabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 gl_bias.ylabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 
@@ -94,28 +102,32 @@ gl_bias.ylabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight':
 ''' Well-known temperature biase exhibited by CMIP6 models from: https://doi.org/10.1029/2022GL100888 '''
 # Artic
 ax100.add_patch(mpatches.Rectangle(xy=[-177, -86], width=354, height=38,
-                                facecolor='none', edgecolor='#299103', linewidth=6, zorder=2, # green
+                                facecolor='none', edgecolor='#299103', linewidth=1, zorder=2, # green
                                 transform=ccrs.PlateCarree()))
 # Cold tongue
 ax100.add_patch(mpatches.Rectangle(xy=[-178, -7], width=90, height=14,
-                                facecolor='none', edgecolor='#000000', linewidth=6, zorder=2, # black
+                                facecolor='none', edgecolor='#000000', linewidth=1, zorder=2, # black
                                 transform=ccrs.PlateCarree()))
 # South East Atlantic
 ax100.add_patch(mpatches.Rectangle(xy=[-25, -38], width=45, height=48,
-                                facecolor='none', edgecolor='#0ff7eb', linewidth=6, zorder=2, # light blue
+                                facecolor='none', edgecolor='#0ff7eb', linewidth=1, zorder=2, # light blue
                                 transform=ccrs.PlateCarree()))
 # North West Atlantic
 ax100.add_patch(mpatches.Rectangle(xy=[155, 10], width=75, height=35,
-                                facecolor='none', edgecolor='#f7ae0f', linewidth=6, zorder=2, # orange
+                                facecolor='none', edgecolor='#f7ae0f', linewidth=1, zorder=2, # orange
                                 transform=ccrs.PlateCarree()))
 # Gulf Stream
 ax100.add_patch(mpatches.Rectangle(xy=[-80, 30], width=60, height=35,
-                                facecolor='none', edgecolor='#f70feb', linewidth=6, zorder=2, # purple
+                                facecolor='none', edgecolor='#f70feb', linewidth=1, zorder=2, # purple
                                 transform=ccrs.PlateCarree()))
 # North East Pacific
 ax100.add_patch(mpatches.Rectangle(xy=[-127, 15], width=23, height=25,
-                                facecolor='none', edgecolor='#36e605', linewidth=6, zorder=2, # light green
+                                facecolor='none', edgecolor='#36e605', linewidth=1, zorder=2, # light green
                                 transform=ccrs.PlateCarree()))
+
+for spine in ax100.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+ax100.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
 
 #################
 #   CMIP6-OBS   #
@@ -125,49 +137,55 @@ ax101 = fig.add_subplot(gs1[0,1], projection=ccrs.Robinson())
 difference_warming_cyclic_data,lons_cyclic=add_cyclic_point(diff_models_ensemble_array_avg,coord=lons)
 cs101=ax101.contourf(lons_cyclic,lats,difference_warming_cyclic_data, levels=levels_bias,
                         transform = ccrs.PlateCarree(),
-                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias)
-ax101.set_title(f'Bias (CMIP6 ensemble–Obs)', loc='center', size=size_title_axes, pad=17)
-ax101.coastlines()
-gl_bias = ax101.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.1, color='black')
+                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias, linewidth=linewidth)
+ax101.set_title(f'Bias (CMIP6 ensemble–Obs)', loc='center', size=size_title_axes, pad=2)
+ax101.coastlines(linewidth=linewidth)
+gl_bias = ax101.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.01, color='black')
 gl_bias.xlabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 gl_bias.ylabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 
 # Artic
 ax101.add_patch(mpatches.Rectangle(xy=[-177, -86], width=354, height=38,
-                                facecolor='none', edgecolor='#299103', linewidth=6, zorder=2, # green
+                                facecolor='none', edgecolor='#299103', linewidth=0.7, zorder=2, # green
                                 transform=ccrs.PlateCarree()))
 # Cold tongue
 ax101.add_patch(mpatches.Rectangle(xy=[-178, -7], width=90, height=14,
-                                facecolor='none', edgecolor='#000000', linewidth=6, zorder=2, # black
+                                facecolor='none', edgecolor='#000000', linewidth=0.7, zorder=2, # black
                                 transform=ccrs.PlateCarree()))
 # South East Atlantic
 ax101.add_patch(mpatches.Rectangle(xy=[-25, -38], width=45, height=48,
-                                facecolor='none', edgecolor='#0ff7eb', linewidth=6, zorder=2, # light blue
+                                facecolor='none', edgecolor='#0ff7eb', linewidth=0.7, zorder=2, # light blue
                                 transform=ccrs.PlateCarree()))
 # North West Pacific
 ax101.add_patch(mpatches.Rectangle(xy=[155, 10], width=75, height=35,
-                                facecolor='none', edgecolor='#f7ae0f', linewidth=6, zorder=2, # orange
+                                facecolor='none', edgecolor='#f7ae0f', linewidth=0.7, zorder=2, # orange
                                 transform=ccrs.PlateCarree()))
 # Gulf Stream
 ax101.add_patch(mpatches.Rectangle(xy=[-80, 30], width=60, height=35,
-                                facecolor='none', edgecolor='#f70feb', linewidth=6, zorder=2, # purple
+                                facecolor='none', edgecolor='#f70feb', linewidth=0.7, zorder=2, # purple
                                 transform=ccrs.PlateCarree()))
 # North East Pacific
 ax101.add_patch(mpatches.Rectangle(xy=[-127, 15], width=23, height=25,
-                                facecolor='none', edgecolor='#36e605', linewidth=6, zorder=2, # light green
+                                facecolor='none', edgecolor='#36e605', linewidth=0.7, zorder=2, # light green
                                 transform=ccrs.PlateCarree()))
+
+for spine in ax101.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+ax101.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
 
 '''
     Colorbar for DNNs-Obs e CMIP6-Obs 
 '''
 cbarticks_bias = [-5.8, -4, -2, 0, 2, 4, 6, 7.5]
 cbar_bias = fig.colorbar(cs100, shrink=0.5, aspect=40, ax=[ax100, ax101], orientation='horizontal', ticks=cbarticks_bias, pad=0.07)
-cbar_bias.set_label(label='Surface Air Temperature difference [°C]', size=size_colorbar_labels, labelpad=20)
+cbar_bias.set_label(label='Surface Air Temperature difference [°C]', size=size_colorbar_labels) #, labelpad=20)
 for l in cbar_bias.ax.xaxis.get_ticklabels():
     l.set_size(size_colorbar_ticks)
+cbar_bias.outline.set_linewidth(linewidth)  # Set the thickness of the colorbar box
+cbar_bias.ax.tick_params(width=linewidth, length=2)  # Reduce thickness and length of the ticks
 
 ax2 = fig.add_subplot(gs2[:])
-ax2.set_title('Difference (DNNs ensemble–Obs)', y=0.75, size=size_title_axes+5)
+ax2.set_title('Difference (DNNs ensemble–Obs)', size=size_title_axes, y=0.73)
 plt.axis('off')
 
 """ DNNs ensemble-obs difference for each validation year """
@@ -179,54 +197,74 @@ ax200 = fig.add_subplot(gs2[0,0], projection=ccrs.Robinson())
 difference_warming_cyclic_data,lons_cyclic=add_cyclic_point(avg_ensemble_maps[idx_scenario,0,:,:]-selected_BEST_data_array[0,:,:],coord=lons)
 cs200=ax200.contourf(lons_cyclic,lats,difference_warming_cyclic_data, levels=levels_bias,
                         transform = ccrs.PlateCarree(),
-                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias)
-ax200.set_title(f'{val_years_list_tl_obs[0]}', loc='center', size=size_title_axes, pad=17)
-ax200.coastlines()
-gl200 = ax200.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.1, color='black')
+                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias, linewidth=linewidth)
+ax200.set_title(f'{val_years_list_tl_obs[0]}', loc='center', size=size_title_axes, pad=-4)
+ax200.coastlines(linewidth=linewidth)
+gl200 = ax200.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.01, color='black')
 gl200.xlabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 gl200.ylabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
+
+for spine in ax200.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+ax200.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
 
 
 ax201 = fig.add_subplot(gs2[0,1], projection=ccrs.Robinson())
 difference_warming_cyclic_data,lons_cyclic=add_cyclic_point(avg_ensemble_maps[idx_scenario,1,:,:]-selected_BEST_data_array[1,:,:],coord=lons)
 cs201=ax201.contourf(lons_cyclic,lats,difference_warming_cyclic_data, levels=levels_bias,
                         transform = ccrs.PlateCarree(),
-                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias)
-ax201.set_title(f'{val_years_list_tl_obs[1]}', loc='center', size=size_title_axes, pad=17)
-ax201.coastlines()
-gl201 = ax201.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.1, color='black')
+                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias, linewidth=linewidth)
+ax201.set_title(f'{val_years_list_tl_obs[1]}', loc='center', size=size_title_axes, pad=-4)
+ax201.coastlines(linewidth=linewidth)
+gl201 = ax201.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.01, color='black')
 gl201.xlabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 gl201.ylabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
+
+for spine in ax201.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+ax201.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
+
 
 
 ax202 = fig.add_subplot(gs2[0,2], projection=ccrs.Robinson())
 difference_warming_cyclic_data,lons_cyclic=add_cyclic_point(avg_ensemble_maps[idx_scenario,2,:,:]-selected_BEST_data_array[2,:,:],coord=lons)
 cs202=ax202.contourf(lons_cyclic,lats,difference_warming_cyclic_data, levels=levels_bias,
                         transform = ccrs.PlateCarree(),
-                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias)
-ax202.set_title(f'{val_years_list_tl_obs[2]}', loc='center', size=size_title_axes, pad=17)
-ax202.coastlines()
-gl202 = ax202.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.1, color='black');
+                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias, linewidth=linewidth)
+ax202.set_title(f'{val_years_list_tl_obs[2]}', loc='center', size=size_title_axes, pad=-4)
+ax202.coastlines(linewidth=linewidth)
+gl202 = ax202.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.01, color='black');
 gl202.xlabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 gl202.ylabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
+
+for spine in ax202.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+ax202.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
 
 
 ax203 = fig.add_subplot(gs2[0,3], projection=ccrs.Robinson())
 difference_warming_cyclic_data,lons_cyclic=add_cyclic_point(avg_ensemble_maps[idx_scenario,3,:,:]-selected_BEST_data_array[3,:,:],coord=lons)
 cs203=ax203.contourf(lons_cyclic,lats,difference_warming_cyclic_data, levels=levels_bias,
                         transform = ccrs.PlateCarree(),
-                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias)
-ax203.set_title(f'{val_years_list_tl_obs[3]}', loc='center', size=size_title_axes, pad=17)
-ax203.coastlines()
-gl203 = ax203.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.1, color='black')
+                        cmap=colormap, vmin=vmin_bias, vmax=vmax_bias, linewidth=linewidth)
+ax203.set_title(f'{val_years_list_tl_obs[3]}', loc='center', size=size_title_axes, pad=-4)
+ax203.coastlines(linewidth=linewidth)
+gl203 = ax203.gridlines(crs=ccrs.PlateCarree(), draw_labels=False, linestyle='--', linewidth=0.01, color='black')
 gl203.xlabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 gl203.ylabel_style = {'size': size_lat_lon_coords, 'color': 'black', 'weight': 'normal'}
 
+for spine in ax203.spines.values():
+        spine.set_linewidth(linewidth)  # Thin the surrounding box
+ax203.tick_params(axis='both', width=linewidth, length=2)  # Thinner ticks with shorter length
+
+
 cbar4 = fig.colorbar(cs203, aspect=40, shrink=0.5, ax=[ax200, ax201, ax202, ax203], orientation='horizontal', ticks=cbarticks_bias, pad=0.07)
-cbar4.set_label(label='Surface Air Temperature difference [°C]', size=size_colorbar_labels, labelpad=20)
+cbar4.set_label(label='Surface Air Temperature difference [°C]', size=size_colorbar_labels) #, labelpad=20)
 for l in cbar4.ax.xaxis.get_ticklabels():
     l.set_size(size_colorbar_ticks)
+cbar4.outline.set_linewidth(linewidth)  # Set the thickness of the colorbar box
+cbar4.ax.tick_params(width=linewidth, length=2)  # Reduce thickness and length of the ticks
 
-plt.text(x=0.12, y=0.9, s='A', fontsize=60, fontweight='bold', ha="center", transform=fig.transFigure)
-plt.text(x=0.12, y=0.425, s='B', fontsize=60, fontweight='bold', ha="center", transform=fig.transFigure)
-plt.savefig('./Fig_4.png', bbox_inches='tight', dpi=300)
+plt.text(x=0.12, y=0.9, s='A', fontsize=60*scale, fontweight='bold', ha="center", transform=fig.transFigure)
+plt.text(x=0.12, y=0.425, s='B', fontsize=60*scale, fontweight='bold', ha="center", transform=fig.transFigure)
+plt.savefig('./Fig_4.pdf', bbox_inches='tight', dpi=300)

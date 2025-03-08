@@ -88,5 +88,5 @@ cbar0 = fig.colorbar(cs0, shrink=0.6, ax=axs, orientation='horizontal', pad=0.08
 cbar0.set_label(label='Surface Air Temperature difference [°C]', size=size_colorbar_labels, labelpad=30)
 cbar0.ax.tick_params(labelsize=size_colorbar_ticks)
 
-plt.savefig('Fig_S3.png', bbox_inches = 'tight', dpi=300, facecolor='white', transparent=False)
+plt.savefig('Fig_S3.pdf', bbox_inches = 'tight', dpi=300, facecolor='white', transparent=False)
 plt.close()
