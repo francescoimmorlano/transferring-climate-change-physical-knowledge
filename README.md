@@ -2,7 +2,7 @@
 
 Transferring climate change physical knowledge
 ==============================================
-A repository including the code needed to reproduce the results present in Immorlano et al. 2025, “Transferring climate change physical knowledge”.
+Repository including the code needed to reproduce the results present in Immorlano et al. 2025, Transferring climate change physical knowledge.
 
 
 Content
