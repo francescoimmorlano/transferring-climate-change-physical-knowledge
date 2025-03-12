@@ -267,6 +267,7 @@ Contributors
 - Thomas le Monnier de Gouville (thomas.le-monnier-de-gouville@polytechnique.edu)
 - Gabriele Accarino (gabriele.accarino@cmcc.it)
 - Donatello Elia (donatello.elia@cmcc.it)
+- Stephan Mandt (mand@uci.edu)
 - Giovanni Aloisio (giovanni.aloisio@cmcc.it)
 - Pierre Gentine (pg2328@columbia.edu)
 
