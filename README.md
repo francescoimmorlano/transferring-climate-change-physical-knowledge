@@ -1,8 +1,8 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15001003.svg)](https://doi.org/10.5281/zenodo.15001003)
 
-Transferring climate change knowledge
-=====================================
-A repository including the code needed to reproduce the results present in Immorlano et al. 2024, “Transferring climate change knowledge”.
+Transferring climate change physical knowledge
+==============================================
+A repository including the code needed to reproduce the results present in Immorlano et al. 2025, “Transferring climate change physical knowledge”.
 
 
 Content
@@ -19,7 +19,7 @@ Content
 
 Related Publication
 -------------------
-Immorlano, F., Eyring, V., le Monnier de Gouville, T., Accarino, G., Elia, D., Aloisio, G. & Gentine, P. Transferring climate change knowledge. arXiv preprint. DOI: <a href="https://doi.org/10.48550/arXiv.2309.14780">arXiv.2309.14780</a> (2024). (*in review*)
+Immorlano, F., Eyring, V., le Monnier de Gouville, T., Accarino, G., Elia, D., Mandt, S., Aloisio, G. & Gentine, P. Transferring climate change physical knowledge. arXiv preprint. DOI: <a href="https://doi.org/10.48550/arXiv.2309.14780">arXiv.2309.14780</a> (2024). (*in publication, PNAS*)
 
 
 Installation
