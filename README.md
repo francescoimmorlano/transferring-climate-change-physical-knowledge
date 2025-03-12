@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10878984.svg)](https://doi.org/10.5281/zenodo.10878984)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15001003.svg)](https://doi.org/10.5281/zenodo.15001003)
 
 Transferring climate change knowledge
 =====================================
