@@ -279,7 +279,7 @@ If you use the resource in your research, please cite our paper:
 ```
 @article{
       doi:10.1073/pnas.2413503122,
-      author = {Francesco Immorlano  and Veronika Eyring  and Thomas le Monnier de Gouville  and Gabriele Accarino  and Donatello Elia  and Stephan Mandt  and Giovanni Aloisio  and Pierre Gentine },
+      author = {Francesco Immorlano and Veronika Eyring and Thomas le Monnier de Gouville and Gabriele Accarino and Donatello Elia and Stephan Mandt and Giovanni Aloisio and Pierre Gentine},
       title = {Transferring climate change physical knowledge},
       journal = {Proceedings of the National Academy of Sciences},
       volume = {122},
