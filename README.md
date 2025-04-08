@@ -2,7 +2,7 @@
 
 Transferring climate change physical knowledge
 ==============================================
-Repository including the code needed to reproduce the results present in <a href="https://www.pnas.org/doi/10.1073/pnas.2413503122">Immorlano et al. 2025, Transferring climate change physical knowledge</a> PNAS, Volume 122, Issue 14, 2025.
+Repository including the code needed to reproduce the results present in <a href="https://www.pnas.org/doi/10.1073/pnas.2413503122">Immorlano et al. 2025, Transferring climate change physical knowledge</a>, PNAS, Volume 122, Issue 14, 2025.
 
 
 Content
