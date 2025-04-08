@@ -2,7 +2,7 @@
 
 Transferring climate change physical knowledge
 ==============================================
-Repository including the code needed to reproduce the results present in Immorlano et al. 2025, Transferring climate change physical knowledge.
+Repository including the code needed to reproduce the results present in <a href="https://www.pnas.org/doi/10.1073/pnas.2413503122">Immorlano et al. 2025, Transferring climate change physical knowledge</a> PNAS, Volume 122, Issue 14, 2025.
 
 
 Content
@@ -19,7 +19,7 @@ Content
 
 Related Publication
 -------------------
-Immorlano, F., Eyring, V., le Monnier de Gouville, T., Accarino, G., Elia, D., Mandt, S., Aloisio, G. & Gentine, P. Transferring climate change physical knowledge. arXiv preprint. DOI: <a href="https://doi.org/10.48550/arXiv.2309.14780">arXiv.2309.14780</a> (2024). (*in publication, PNAS*)
+F. Immorlano, V. Eyring, T. le Monnier de Gouville, G. Accarino, D. Elia, S. Mandt, G. Aloisio, P. Gentine,  Transferring climate change physical knowledge, Proc. Natl. Acad. Sci. U.S.A. 122 (15) e2413503122, <a href="https://doi.org/10.1073/pnas.2413503122">https://doi.org/10.1073/pnas.2413503122</a> (2025).
 
 
 Installation
@@ -275,18 +275,21 @@ Contributors
 Acknowledgements and References
 -------------------------------
 
-If you use the resource in your research, please cite our paper. At the moment, we offer the bibliography of the arXiv preprint version.
-
+If you use the resource in your research, please cite our paper:
 ```
-@misc{immorlano_2023_transferring,
-      title={Transferring climate change knowledge}, 
-      author={Francesco Immorlano and Veronika Eyring and Thomas le Monnier de Gouville and Gabriele Accarino and Donatello Elia and Giovanni Aloisio and Pierre Gentine},
-      year={2024},
-      eprint={2309.14780},
-      archivePrefix={arXiv},
-      primaryClass={physics.ao-ph}
-}
-```
+@article{
+      doi:10.1073/pnas.2413503122,
+      author = {Francesco Immorlano  and Veronika Eyring  and Thomas le Monnier de Gouville  and Gabriele Accarino  and Donatello Elia  and Stephan Mandt  and Giovanni Aloisio  and Pierre Gentine },
+      title = {Transferring climate change physical knowledge},
+      journal = {Proceedings of the National Academy of Sciences},
+      volume = {122},
+      number = {15},
+      pages = {e2413503122},
+      year = {2025},
+      doi = {10.1073/pnas.2413503122},
+      URL = {https://www.pnas.org/doi/abs/10.1073/pnas.2413503122},
+      eprint = {https://www.pnas.org/doi/pdf/10.1073/pnas.2413503122},
+}```
 
 License
 -------
